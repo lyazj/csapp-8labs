@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+if [ $# != 1 ]; then
+    echo $0: need exactly 1 operand
+    exit 1
+fi
+
+hex=$1
+bin=${hex%.*}.bin
+
+xxd -r $hex > $bin
+xxd -g 1 $bin > $hex

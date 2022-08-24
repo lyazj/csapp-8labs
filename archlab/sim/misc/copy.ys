@@ -1,0 +1,41 @@
+# vim:ft=asm
+	.pos	0x100
+	.align 8
+src:
+	.quad	0x00a
+	.quad	0x0b0
+	.quad	0xc00
+dest:
+	.quad	0x111
+	.quad	0x222
+	.quad	0x333
+	.pos	0x200
+stack:
+	.pos	0
+start:
+	irmovq	$stack, %rsp
+	xorq	%rbp, %rbp
+	irmovq	$3, %rdx
+	irmovq	$dest, %rsi
+	irmovq	$src, %rdi
+	call	copy_block
+	halt
+# long copy_block(long *src, long *dst, long len);
+# 	src in %rdi, dst in %rsi, len in %rdx
+# 	1 in %rbx, 8 in %rbp, val in %rcx
+copy_block:
+	xorq	%rax, %rax
+	andq	%rdx, %rdx
+	jle	L1
+	irmovq	$8, %r8
+	irmovq	$1, %r9
+L0:
+	mrmovq	0(%rdi), %rcx
+	addq	%r8, %rdi
+	rmmovq	%rcx, 0(%rsi)
+	addq	%r8, %rsi
+	xorq	%rcx, %rax
+	subq	%r9, %rdx
+	jg	L0
+L1:
+	ret

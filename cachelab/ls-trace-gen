@@ -1,0 +1,3 @@
+#!/bin/bash
+
+valgrind --log-fd=3 --tool=lackey -v --trace-mem=yes ls -l "$0" 3>traces/ls.trace

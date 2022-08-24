@@ -1,0 +1,49 @@
+int seq[6];  // 要求为数字1至6的一个排列
+for(int i : {0, 1, 2, 3, 4, 5})  // 逆序
+{
+	seq[i] = 7 - seq[i];
+}
+
+long ans[6];	// *(long (*)[6])((unsigned long)&seq[6] + 32)
+for(int i = 0; i < 6; ++i) {
+	int val = seq[i];
+	long rdx = 0x6032d0;
+	for(int j = 1; j < val; ++j)
+		rdx = *(long *)(rdx + 8);  // 链表第二个八字节元素next
+	ans[i] = rdx;
+}
+/*
+	val	ans		org	addr
+	1	0x6032d0	6	0x6032c8
+	2	0x6032e0	5	0x6032d8
+	3	0x6032f0	4	0x6032e8
+	4	0x603300	3	0x6032f8
+	5	0x603310	2	0x603308
+	6	0x603320	1	0x603318
+*/
+// 0x4011ab
+// p in %rcx, ptr in %rax, val in %rdx
+long *rsi = &ans[6];
+long *rbx = &ans[0];
+long val;
+for(long *ptr = &ans[1], *p = &ans[0]; ptr != &ans[6]; ++ptr)
+	p = (long *)(p[1] = val = *ptr);
+*(long *)(val + 8) = 0;
+
+// i in %ebp, ptr in %rbx
+long *ptr = &ans[0];
+for(int i = 5; i; --i) {
+	assert(*(int *)ptr[0] >= *(int *)ptr[1]);  // 链表第一个八字节元素val
+	++ptr;
+}
+/*
+	ans		val	org
+	0x6032d0	0x14c	6
+	0x6032e0	0xa8	5
+	0x6032f0	0x39c	4
+	0x603300	0x2b3	3
+	0x603310	0x1dd	2
+	0x603320	0x1bb	1
+*/
+
+// 4 3 2 1 6 5

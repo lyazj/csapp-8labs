@@ -1,0 +1,3 @@
+#!/bin/bash
+
+valgrind --log-fd=3 --tool=lackey -v --trace-mem=yes ./hw 3>traces/hw.trace

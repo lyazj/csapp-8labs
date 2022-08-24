@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo -n "L1: "
+./csim -s 6 -E 8 -b 6 -t traces/ls.trace
+echo -n "L2: "
+./csim -s 9 -E 8 -b 6 -t traces/ls.trace
+echo -n "L3: "
+./csim -s 13 -E 16 -b 6 -t traces/ls.trace

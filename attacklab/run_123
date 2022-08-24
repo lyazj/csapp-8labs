@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# != 1 ]; then
+    echo $0: need exactly 1 operand
+    exit 1
+fi
+
+target=./ctarget
+hex=level$1.hex
+
+xxd -r $hex | $target -q

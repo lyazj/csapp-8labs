@@ -1,0 +1,25 @@
+#!/bin/bash
+
+driver=./sdriver.pl
+shell=./tsh
+refshell=./tshref
+tmp=/tmp/$$.tmp
+
+function clean_up_and_exit () {
+    rm -f $tmp
+    exit
+}
+
+trap clean_up_and_exit SIGINT
+
+for trace in trace*.txt; do
+    clear
+    $driver -t $trace -s $refshell -a '-p' > $tmp &
+    tail -f -s 0.01 $tmp --pid $!
+    echo
+    $driver -t $trace -s $shell -a '-p' | diff - $tmp || echo
+    echo Press ENTER to continue...
+    read
+done
+
+clean_up_and_exit

@@ -1,0 +1,218 @@
+#
+# trace01.txt - Properly terminate on EOF.
+#
+#
+# trace02.txt - Process builtin quit command.
+#
+#
+# trace03.txt - Run a foreground job.
+#
+tsh> quit
+#
+# trace04.txt - Run a background job.
+#
+tsh> ./myspin 1 &
+[1] (7491) ./myspin 1 &
+#
+# trace05.txt - Process jobs builtin command.
+#
+tsh> ./myspin 2 &
+[1] (7495) ./myspin 2 &
+tsh> ./myspin 3 &
+[2] (7497) ./myspin 3 &
+tsh> jobs
+[1] (7495) Running ./myspin 2 &
+[2] (7497) Running ./myspin 3 &
+#
+# trace06.txt - Forward SIGINT to foreground job.
+#
+tsh> ./myspin 4
+Job [1] (7502) terminated by signal 2
+#
+# trace07.txt - Forward SIGINT only to foreground job.
+#
+tsh> ./myspin 4 &
+[1] (7506) ./myspin 4 &
+tsh> ./myspin 5
+Job [2] (7508) terminated by signal 2
+tsh> jobs
+[1] (7506) Running ./myspin 4 &
+#
+# trace08.txt - Forward SIGTSTP only to foreground job.
+#
+tsh> ./myspin 4 &
+[1] (7513) ./myspin 4 &
+tsh> ./myspin 5
+Job [2] (7515) stopped by signal 20
+tsh> jobs
+[1] (7513) Running ./myspin 4 &
+[2] (7515) Stopped ./myspin 5 
+#
+# trace09.txt - Process bg builtin command
+#
+tsh> ./myspin 4 &
+[1] (7520) ./myspin 4 &
+tsh> ./myspin 5
+Job [2] (7522) stopped by signal 20
+tsh> jobs
+[1] (7520) Running ./myspin 4 &
+[2] (7522) Stopped ./myspin 5 
+tsh> bg %2
+[2] (7522) ./myspin 5 
+tsh> jobs
+[1] (7520) Running ./myspin 4 &
+[2] (7522) Running ./myspin 5 
+#
+# trace10.txt - Process fg builtin command. 
+#
+tsh> ./myspin 4 &
+[1] (7529) ./myspin 4 &
+tsh> fg %1
+Job [1] (7529) stopped by signal 20
+tsh> jobs
+[1] (7529) Stopped ./myspin 4 &
+tsh> fg %1
+tsh> jobs
+#
+# trace11.txt - Forward SIGINT to every process in foreground process group
+#
+tsh> ./mysplit 4
+Job [1] (7537) terminated by signal 2
+tsh> /bin/ps a
+    PID TTY      STAT   TIME COMMAND
+   5857 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
+   5859 tty2     Sl+    0:05 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   5879 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
+   7367 pts/0    Ss     0:00 bash
+   7434 pts/1    Ss+    0:00 bash
+   7478 pts/0    S+     0:00 /bin/bash ./test
+   7479 pts/0    S+     0:00 /bin/bash ./test
+   7480 pts/0    S+     0:00 tail -f -s 0.1 tsh.out --pid 7479
+   7534 pts/0    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace11.txt -s ./tsh -a -p
+   7535 pts/0    S+     0:00 ./tsh -p
+   7540 pts/0    R      0:00 /bin/ps a
+#
+# trace12.txt - Forward SIGTSTP to every process in foreground process group
+#
+tsh> ./mysplit 4
+Job [1] (7544) stopped by signal 20
+tsh> jobs
+[1] (7544) Stopped ./mysplit 4 
+tsh> /bin/ps a
+    PID TTY      STAT   TIME COMMAND
+   5857 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
+   5859 tty2     Sl+    0:05 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   5879 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
+   7367 pts/0    Ss     0:00 bash
+   7434 pts/1    Ss+    0:00 bash
+   7478 pts/0    S+     0:00 /bin/bash ./test
+   7479 pts/0    S+     0:00 /bin/bash ./test
+   7480 pts/0    S+     0:00 tail -f -s 0.1 tsh.out --pid 7479
+   7541 pts/0    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace12.txt -s ./tsh -a -p
+   7542 pts/0    S+     0:00 ./tsh -p
+   7544 pts/0    T      0:00 ./mysplit 4
+   7545 pts/0    T      0:00 ./mysplit 4
+   7548 pts/0    R      0:00 /bin/ps a
+#
+# trace13.txt - Restart every stopped process in process group
+#
+tsh> ./mysplit 4
+Job [1] (7552) stopped by signal 20
+tsh> jobs
+[1] (7552) Stopped ./mysplit 4 
+tsh> /bin/ps a
+    PID TTY      STAT   TIME COMMAND
+   5857 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
+   5859 tty2     Sl+    0:05 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   5879 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
+   7367 pts/0    Ss     0:00 bash
+   7434 pts/1    Ss+    0:00 bash
+   7478 pts/0    S+     0:00 /bin/bash ./test
+   7479 pts/0    S+     0:00 /bin/bash ./test
+   7480 pts/0    S+     0:00 tail -f -s 0.1 tsh.out --pid 7479
+   7549 pts/0    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace13.txt -s ./tsh -a -p
+   7550 pts/0    S+     0:00 ./tsh -p
+   7552 pts/0    T      0:00 ./mysplit 4
+   7553 pts/0    T      0:00 ./mysplit 4
+   7559 pts/0    R      0:00 /bin/ps a
+tsh> fg %1
+tsh> /bin/ps a
+    PID TTY      STAT   TIME COMMAND
+   5857 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
+   5859 tty2     Sl+    0:05 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   5879 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
+   7367 pts/0    Ss     0:00 bash
+   7434 pts/1    Ss+    0:00 bash
+   7478 pts/0    S+     0:00 /bin/bash ./test
+   7479 pts/0    S+     0:00 /bin/bash ./test
+   7480 pts/0    S+     0:00 tail -f -s 0.1 tsh.out --pid 7479
+   7549 pts/0    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace13.txt -s ./tsh -a -p
+   7550 pts/0    S+     0:00 ./tsh -p
+   7562 pts/0    R      0:00 /bin/ps a
+#
+# trace14.txt - Simple error handling
+#
+tsh> ./bogus
+./bogus: command not found
+tsh> ./myspin 4 &
+[1] (7568) ./myspin 4 &
+tsh> fg
+fg command requires PID or %jobid argument
+tsh> bg
+bg command requires PID or %jobid argument
+tsh> fg a
+fg: argument must be a PID or %jobid
+tsh> bg a
+bg: argument must be a PID or %jobid
+tsh> fg 9999999
+(9999999): No such process
+tsh> bg 9999999
+(9999999): No such process
+tsh> fg %2
+%2: No such job
+tsh> fg %1
+Job [1] (7568) stopped by signal 20
+tsh> bg %2
+%2: No such job
+tsh> bg %1
+[1] (7568) ./myspin 4 &
+tsh> jobs
+[1] (7568) Running ./myspin 4 &
+#
+# trace15.txt - Putting it all together
+#
+tsh> ./bogus
+./bogus: command not found
+tsh> ./myspin 10
+Job [1] (7585) terminated by signal 2
+tsh> ./myspin 3 &
+[1] (7587) ./myspin 3 &
+tsh> ./myspin 4 &
+[2] (7589) ./myspin 4 &
+tsh> jobs
+[1] (7587) Running ./myspin 3 &
+[2] (7589) Running ./myspin 4 &
+tsh> fg %1
+Job [1] (7587) stopped by signal 20
+tsh> jobs
+[1] (7587) Stopped ./myspin 3 &
+[2] (7589) Running ./myspin 4 &
+tsh> bg %3
+%3: No such job
+tsh> bg %1
+[1] (7587) ./myspin 3 &
+tsh> jobs
+[1] (7587) Running ./myspin 3 &
+[2] (7589) Running ./myspin 4 &
+tsh> fg %1
+tsh> quit
+#
+# trace16.txt - Tests whether the shell can handle SIGTSTP and SIGINT
+#     signals that come from other processes instead of the terminal.
+#
+tsh> ./mystop 2
+Job [1] (7601) stopped by signal 20
+tsh> jobs
+[1] (7601) Stopped ./mystop 2
+tsh> ./myint 2
+Job [2] (7604) terminated by signal 2

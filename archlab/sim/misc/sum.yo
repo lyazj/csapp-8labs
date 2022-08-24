@@ -1,0 +1,32 @@
+                            | # vim:ft=asm
+0x100:                      | 	.pos	0x100
+0x100:                      | 	.align 8
+0x100:                      | ele1:
+0x100: 0a00000000000000     | 	.quad	0x00a
+0x108: 1001000000000000     | 	.quad	ele2
+0x110:                      | ele2:
+0x110: b000000000000000     | 	.quad	0x0b0
+0x118: 2001000000000000     | 	.quad	ele3
+0x120:                      | ele3:
+0x120: 000c000000000000     | 	.quad	0xc00
+0x128: 0000000000000000     | 	.quad	0
+0x200:                      | 	.pos	0x200
+0x200:                      | stack:
+0x000:                      | 	.pos	0
+0x000:                      | start:
+0x000: 30f40002000000000000 | 	irmovq	$stack, %rsp
+0x00a: 6355                 | 	xorq	%rbp, %rbp
+0x00c: 30f70001000000000000 | 	irmovq	$ele1, %rdi
+0x016: 802000000000000000   | 	call	sum_list
+0x01f: 00                   | 	halt
+0x020:                      | sum_list:
+0x020: 6300                 | 	xorq	%rax, %rax
+0x022: 704100000000000000   | 	jmp	L1
+0x02b:                      | L0:
+0x02b: 50270000000000000000 | 	mrmovq	0(%rdi), %rdx
+0x035: 6020                 | 	addq	%rdx, %rax
+0x037: 50770800000000000000 | 	mrmovq	8(%rdi), %rdi
+0x041:                      | L1:
+0x041: 6277                 | 	andq	%rdi, %rdi
+0x043: 742b00000000000000   | 	jne	L0
+0x04c: 90                   | 	ret

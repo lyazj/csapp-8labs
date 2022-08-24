@@ -1,0 +1,248 @@
+movq:
+	0x4019a2:	48 89 c7	movq	%rax, %rdi
+
+   0x4019a2 <addval_273+2>:	mov    %rax,%rdi
+   0x4019a5 <addval_273+5>:	retq   
+
+
+	0x4019b0:	48 89 c7	movq	%rax, %rdi
+
+   0x4019b0 <setval_237+2>:	mov    %rax,%rdi
+   0x4019b3 <setval_237+5>:	mov    $0xc25407c7,%ebx
+   0x4019b9 <setval_424+4>:	pop    %rax
+   0x4019ba <setval_424+5>:	xchg   %eax,%edx
+   0x4019bb <setval_424+6>:	retq   
+
+
+	0x4019c5:	48 89 c7	movq	%rax, %rdi
+
+   0x4019c5 <setval_426+2>:	mov    %rax,%rdi
+   0x4019c8 <setval_426+5>:	nop
+   0x4019c9 <setval_426+6>:	retq   
+
+
+	0x401a06:	48 89 e0	movq	%rsp, %rax
+
+   0x401a06 <addval_190+3>:	mov    %rsp,%rax
+   0x401a09 <addval_190+6>:	retq   
+
+
+	0x401a19:	48 89 e0	movq	%rsp, %rax
+
+   0x401a19 <getval_345+1>:	mov    %rsp,%rax
+   0x401a1c <getval_345+4>:	rol    $0x8d,%ebx
+   0x401a1f <addval_479+1>:	xchg   %ecx,-0x3c36ff3e(%rcx)
+   0x401a25 <addval_187>:	lea    -0x3fc73177(%rdi),%eax
+   0x401a2b <addval_187+6>:	retq   
+
+
+	0x401a49:	48 89 e0	movq	%rsp, %rax
+
+   0x401a49 <addval_201+2>:	mov    %rsp,%rax
+   0x401a4c <addval_201+5>:	mov    $0x8d199b8,%ebx
+   0x401a52 <getval_272+4>:	rol    %cl,%bl
+   0x401a54 <getval_155>:	mov    $0xc9c4c289,%eax
+   0x401a59 <getval_155+5>:	retq   
+
+
+	0x401a5c:	48 89 e0	movq	%rsp, %rax
+
+   0x401a5c <setval_299+2>:	mov    %rsp,%rax
+   0x401a5f <setval_299+5>:	xchg   %eax,%ecx
+   0x401a60 <setval_299+6>:	retq   
+
+
+	0x401a99:	48 89 e0	movq	%rsp, %rax
+
+   0x401a99 <setval_181+2>:	mov    %rsp,%rax
+   0x401a9c <setval_181+5>:	retq   $0x8dc3
+
+
+	0x401aad:	48 89 e0	movq	%rsp, %rax
+
+   0x401aad <setval_350+2>:	mov    %rsp,%rax
+   0x401ab0 <setval_350+5>:	nop
+   0x401ab1 <setval_350+6>:	retq   
+
+
+popq:
+	0x4019ab:	58      	popq	%rax
+
+   0x4019ab <addval_219+4>:	pop    %rax
+   0x4019ac <addval_219+5>:	nop
+   0x4019ad <addval_219+6>:	retq   
+
+
+	0x4019b9:	58      	popq	%rax
+
+   0x4019b9 <setval_424+4>:	pop    %rax
+   0x4019ba <setval_424+5>:	xchg   %eax,%edx
+   0x4019bb <setval_424+6>:	retq   
+
+
+	0x4019cc:	58      	popq	%rax
+
+   0x4019cc <getval_280+2>:	pop    %rax
+   0x4019cd <getval_280+3>:	nop
+   0x4019ce <getval_280+4>:	retq   
+
+
+	0x4019dc:	5c      	popq	%rsp
+
+   0x4019dc <getval_481+1>:	pop    %rsp
+   0x4019dd <getval_481+2>:	mov    %eax,%edx
+   0x4019df <getval_481+4>:	nop
+   0x4019e0 <getval_481+5>:	retq   
+
+
+movl:
+	0x4019a3:	89 c7   	movl	%eax, %edi
+
+   0x4019a3 <addval_273+3>:	mov    %eax,%edi
+   0x4019a5 <addval_273+5>:	retq   
+
+
+	0x4019b1:	89 c7   	movl	%eax, %edi
+
+   0x4019b1 <setval_237+3>:	mov    %eax,%edi
+   0x4019b3 <setval_237+5>:	mov    $0xc25407c7,%ebx
+   0x4019b9 <setval_424+4>:	pop    %rax
+   0x4019ba <setval_424+5>:	xchg   %eax,%edx
+   0x4019bb <setval_424+6>:	retq   
+
+
+	0x4019c6:	89 c7   	movl	%eax, %edi
+
+   0x4019c6 <setval_426+3>:	mov    %eax,%edi
+   0x4019c8 <setval_426+5>:	nop
+   0x4019c9 <setval_426+6>:	retq   
+
+
+	0x4019dd:	89 c2   	movl	%eax, %edx
+
+   0x4019dd <getval_481+2>:	mov    %eax,%edx
+   0x4019df <getval_481+4>:	nop
+   0x4019e0 <getval_481+5>:	retq   
+
+
+	0x4019ea:	89 ce   	movl	%ecx, %esi
+
+   0x4019ea <addval_113+2>:	mov    %ecx,%esi
+   0x4019ec <addval_113+4>:	js     0x4019b7 <setval_424+2>
+   0x4019ee <addval_113+6>:	retq   
+
+
+	0x401a07:	89 e0   	movl	%esp, %eax
+
+   0x401a07 <addval_190+4>:	mov    %esp,%eax
+   0x401a09 <addval_190+6>:	retq   
+
+
+	0x401a13:	89 ce   	movl	%ecx, %esi
+
+   0x401a13 <addval_436+2>:	mov    %ecx,%esi
+   0x401a15 <addval_436+4>:	nop
+   0x401a16 <addval_436+5>:	nop
+   0x401a17 <addval_436+6>:	retq   
+
+
+	0x401a1a:	89 e0   	movl	%esp, %eax
+
+   0x401a1a <getval_345+2>:	mov    %esp,%eax
+   0x401a1c <getval_345+4>:	rol    $0x8d,%ebx
+   0x401a1f <addval_479+1>:	xchg   %ecx,-0x3c36ff3e(%rcx)
+   0x401a25 <addval_187>:	lea    -0x3fc73177(%rdi),%eax
+   0x401a2b <addval_187+6>:	retq   
+
+
+	0x401a20:	89 c2   	movl	%eax, %edx
+
+   0x401a20 <addval_479+2>:	mov    %eax,%edx
+   0x401a22 <addval_479+4>:	add    %cl,%cl
+   0x401a24 <addval_479+6>:	retq   
+
+
+	0x401a27:	89 ce   	movl	%ecx, %esi
+
+   0x401a27 <addval_187+2>:	mov    %ecx,%esi
+   0x401a29 <addval_187+4>:	cmp    %al,%al
+   0x401a2b <addval_187+6>:	retq   
+
+
+	0x401a34:	89 d1   	movl	%edx, %ecx
+
+   0x401a34 <getval_159+1>:	mov    %edx,%ecx
+   0x401a36 <getval_159+3>:	cmp    %cl,%cl
+   0x401a38 <getval_159+5>:	retq   
+
+
+	0x401a3c:	89 e0   	movl	%esp, %eax
+
+   0x401a3c <addval_110+3>:	mov    %esp,%eax
+   0x401a3e <addval_110+5>:	retq   
+
+
+	0x401a42:	89 c2   	movl	%eax, %edx
+
+   0x401a42 <addval_487+2>:	mov    %eax,%edx
+   0x401a44 <addval_487+4>:	test   %al,%al
+   0x401a46 <addval_487+6>:	retq   
+
+
+	0x401a4a:	89 e0   	movl	%esp, %eax
+
+   0x401a4a <addval_201+3>:	mov    %esp,%eax
+   0x401a4c <addval_201+5>:	mov    $0x8d199b8,%ebx
+   0x401a52 <getval_272+4>:	rol    %cl,%bl
+   0x401a54 <getval_155>:	mov    $0xc9c4c289,%eax
+   0x401a59 <getval_155+5>:	retq   
+
+
+	0x401a5d:	89 e0   	movl	%esp, %eax
+
+   0x401a5d <setval_299+3>:	mov    %esp,%eax
+   0x401a5f <setval_299+5>:	xchg   %eax,%ecx
+   0x401a60 <setval_299+6>:	retq   
+
+
+	0x401a63:	89 ce   	movl	%ecx, %esi
+
+   0x401a63 <addval_404+2>:	mov    %ecx,%esi
+   0x401a65 <addval_404+4>:	xchg   %eax,%edx
+   0x401a66 <addval_404+5>:	retq   
+
+
+	0x401a69:	89 d1   	movl	%edx, %ecx
+
+   0x401a69 <getval_311+1>:	mov    %edx,%ecx
+   0x401a6b <getval_311+3>:	or     %bl,%bl
+   0x401a6d <getval_311+5>:	retq   
+
+
+	0x401a70:	89 d1   	movl	%edx, %ecx
+
+   0x401a70 <setval_167+2>:	mov    %edx,%ecx
+   0x401a72 <setval_167+4>:	xchg   %eax,%ecx
+   0x401a73 <setval_167+5>:	retq   
+
+
+	0x401a86:	89 e0   	movl	%esp, %eax
+
+   0x401a86 <addval_358+3>:	mov    %esp,%eax
+   0x401a88 <addval_358+5>:	nop
+   0x401a89 <addval_358+6>:	retq   
+
+
+	0x401a9a:	89 e0   	movl	%esp, %eax
+
+   0x401a9a <setval_181+3>:	mov    %esp,%eax
+   0x401a9c <setval_181+5>:	retq   $0x8dc3
+
+
+	0x401aae:	89 e0   	movl	%esp, %eax
+
+   0x401aae <setval_350+3>:	mov    %esp,%eax
+   0x401ab0 <setval_350+5>:	nop
+   0x401ab1 <setval_350+6>:	retq   
+
+

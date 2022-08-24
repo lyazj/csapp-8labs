@@ -1,0 +1,8 @@
+4019a2:
+	movq	%rax, %rdi
+	ret
+
+4019ab:
+	popq    %rax
+	nop
+	ret
